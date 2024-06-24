@@ -4,21 +4,24 @@ import beforeEach from "./before-each";
 const routes = [
   {
     path: "/",
-    name: "app",
-    redirect: "/module/overview", // 重定向
-  },
-  {
-    path: "/module/:mode",
-    name: "module",
-    component: () => import("@/views/index/index.vue"),
-  },
+    name: "Layout",
+    component: () => import("@/layout/index.vue"),
+    redirect: "/overview", // 重定向
+    children: [
+      // 添加子路由
+      {
+        path: "/overview",
+        name: "overview",
+        component: () => import("@/views/components/overview/index.vue"),
+      },
 
-  {
-    path: "/ec",
-    name: "ec",
-    component: () => import("@/views/index/ec.vue"),
+      {
+        path: "/pinyin",
+        name: "pinyin",
+        component: () => import("@/views/components/pinyin/index.vue"),
+      },
+    ],
   },
-
   {
     path: "/:pathMatch(.*)*",
     name: "any",

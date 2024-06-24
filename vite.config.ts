@@ -53,7 +53,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
     server: {
       // open: true,
       host: "0.0.0.0",
-      port: 9999,
+      port: 8888,
     },
     base: "./",
   };

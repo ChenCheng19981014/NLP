@@ -13,7 +13,6 @@ import "@/design/index.scss";
 // 导入仓库
 import pinia from "@/store";
 import { addDirective } from "@/directives/index";
-import "@/utils/webscoket";
 
 // 获取应用实例对象
 const app = createApp(App);
