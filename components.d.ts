@@ -8,11 +8,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ChartBaseV3: typeof import('./src/components/global/chart-base-v3.vue')['default']
-    ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElPopover: typeof import('element-plus/es')['ElPopover']
-    ElTable: typeof import('element-plus/es')['ElTable']
-    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
