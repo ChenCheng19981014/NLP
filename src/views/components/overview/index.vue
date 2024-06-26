@@ -106,7 +106,11 @@ const dealOptions = () => {
       {
          source: 3,
          target: 0,
-         value: 'nn'
+         value: 'nn',
+         ignoreForceLayout: false,
+         label: {
+            position: 'middle'
+         }
       },
       {
          source: 3,
