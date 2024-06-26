@@ -10,6 +10,8 @@ declare module 'vue' {
     ChartBaseV3: typeof import('./src/components/global/chart-base-v3.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElPopover: typeof import('element-plus/es')['ElPopover']
+    GraphEc: typeof import('./src/components/global/graph-ec.vue')['default']
+    RelationalEc: typeof import('./src/components/global/relational-ec.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

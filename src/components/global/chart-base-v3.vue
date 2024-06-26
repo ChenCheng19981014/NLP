@@ -9,13 +9,11 @@ import "echarts-liquidfill";
 import "echarts-gl";
 const chartRef = ref(null);
 const emit = defineEmits(["loadOver"]);
-let chartInstance;
-let changeHeight = ref();
+let chartInstance = null;
 
 const initChart = () => {
   if (!chartRef.value) {
-    console.warn();
-    ("图表容器不可用!");
+    console.warn("图表容器不可用!");
     return;
   } else {
     nextTick(() => {
@@ -33,7 +31,7 @@ const initChart = () => {
 
 // 创建一个 ResizeObserver 实例
 const resizeObserver = new ResizeObserver(() => {
-  chartInstance.resize();
+  chartInstance?.resize();
 });
 
 onMounted(() => {
