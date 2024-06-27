@@ -8,9 +8,12 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ChartBaseV3: typeof import('./src/components/global/chart-base-v3.vue')['default']
+    ElAffix: typeof import('element-plus/es')['ElAffix']
+    ElAnchor: typeof import('element-plus/es')['ElAnchor']
+    ElAnchorLink: typeof import('element-plus/es')['ElAnchorLink']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElInput: typeof import('element-plus/es')['ElInput']
     ElPopover: typeof import('element-plus/es')['ElPopover']
-    GraphEc: typeof import('./src/components/global/graph-ec.vue')['default']
     RelationalEc: typeof import('./src/components/global/relational-ec.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

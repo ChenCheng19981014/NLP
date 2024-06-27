@@ -1,10 +1,9 @@
 // 布局模块
 // body容器
-body,
-#app {
+body,#app {
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  // overflow: hidden;
   // background: $background;
   font-size: $base-font;
 }

@@ -1,28 +1,29 @@
-
-  
-<script setup lang='ts'>
-import { ref } from 'vue';
-import Nav from './components/nav.vue'
+<script setup lang="ts">
+import { ref } from "vue";
+import Nav from "./components/nav.vue";
 </script>
-  
-<template>
- <div class='layout'>
 
+<template>
+  <div class="layout">
     <!-- 顶部 -->
-    <Nav  style="height: 45px;" />
+    <Nav class="layout-nav" />
 
     <!-- 内容 -->
-    <RouterView/>
- </div> 
+    <RouterView />
+  </div>
 </template>
 
-
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/design/hooks.scss";
-.layout{
-    width: 100%;
-    height: 100%;
-    @include center;
-    flex-direction: column;
-} 
+.layout {
+  width: 100%;
+  @include center;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: scroll;
+
+  .layout-nav {
+    height: 45px;
+  }
+}
 </style>
