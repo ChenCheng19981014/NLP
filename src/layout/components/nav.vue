@@ -3,6 +3,7 @@
 
 .global-nav {
   background: #000;
+
   .show-function {
     width: 100%;
     height: 100%;
@@ -103,20 +104,23 @@
 </style>
 
 <script setup lang="ts">
+import { useRouter, useRoute } from "vue-router";
 import { reactive, ref } from "vue";
+// 路由
+const router = useRouter(); // 跳转 功能
 // 功能 列表
 const functionList = reactive([
-  { id: 1, funName: "综合演示" },
-  { id: 2, funName: "文本对比" },
-  { id: 3, funName: "实体、摘要、事件" },
-  { id: 4, funName: "数据单位抽取" },
-  { id: 5, funName: "拼音检索" },
-  { id: 6, funName: "敏感度识别" },
-  { id: 7, funName: "FastText分类" },
-  { id: 8, funName: "相似检索" },
-  { id: 9, funName: "FastText分类" },
-  { id: 10, funName: "相似度计算" },
-  { id: 11, funName: "热点聚类" },
+  { id: 1, funName: "综合演示", routePath: "" },
+  { id: 2, funName: "文本对比", routePath: "/compare" },
+  { id: 3, funName: "实体、摘要、事件", routePath: "/pinyin" },
+  { id: 4, funName: "数据单位抽取", routePath: "/pinyin" },
+  { id: 5, funName: "拼音检索", routePath: "/pinyin" },
+  { id: 6, funName: "敏感度识别", routePath: "/censor" },
+  { id: 7, funName: "FastText分类", routePath: "/pinyin" },
+  { id: 8, funName: "相似检索", routePath: "/pinyin" },
+  { id: 9, funName: "FastText分类", routePath: "/pinyin" },
+  { id: 10, funName: "相似度计算", routePath: "/pinyin" },
+  { id: 11, funName: "热点聚类", routePath: "/pinyin" },
 ]);
 
 // 接口使用文档 地址
@@ -125,6 +129,18 @@ const apiHref = ref("https://ai.trs.cn/ckm/web/api-docs");
 // 开启新页面
 const openNewPage = (url: string) => {
   window.open(url);
+};
+
+// 首页 最右侧dialog弹出状态
+const navDialogStatus = ref(false);
+
+// 跳转路由
+const jumpRouter = (i: any) => {
+  const { routePath } = i;
+  // 更新当前的模块
+  router.replace({ path: `/overview${routePath}` }); // 添加查询参数
+  navDialogStatus.value = false;
+  // console.log("跳转路由:", i, navDialogStatus.value);
 };
 </script>
 
@@ -151,13 +167,17 @@ const openNewPage = (url: string) => {
           popper-class="show-function-dialog"
           placement="bottom"
           :width="250"
+          :visible="navDialogStatus"
           trigger="click"
         >
           <template #reference>
-            <el-button class="show-function">功能演示</el-button>
+            <el-button class="show-function" @click="navDialogStatus = true"
+              >功能演示</el-button
+            >
           </template>
           <div class="function-list">
             <div
+              @click="jumpRouter(i)"
               class="list-item"
               v-for="(i, index) in functionList"
               :key="index + '_funcName'"

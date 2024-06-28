@@ -5,7 +5,7 @@
   width: 100%;
   height: 100%;
   @include center;
-  color: white;
+  color: balck;
 }
 </style>
 
@@ -14,5 +14,5 @@ import { ref } from "vue";
 </script>
 
 <template>
-  <div class="pinyin">拼音</div>
+  <div class="pinyin">敏感度识别</div>
 </template>

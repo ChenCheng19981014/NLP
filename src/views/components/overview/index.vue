@@ -45,7 +45,8 @@
 </style>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { ref, reactive, onMounted, watch } from "vue";
 import TextSub from "./components/text-submission.vue";
 import Result from "./components/result.vue";
 // 指示线 曲率
@@ -192,7 +193,6 @@ const dealOptionsData = () => {
     };
   });
 };
-
 // 是否有返回接口 判断字符
 const haveResult = ref(false);
 // 提交 文本
@@ -210,19 +210,37 @@ onMounted(() => {
   // 处理图表 options
   dealOptionsData();
 });
+
+// 是否是首页
+const isOverViews = ref(false);
+// 路由 信息
+const route = useRoute();
+watch(
+  () => route,
+  (to, from) => {
+    // 是否为首页  首页显示首页内容
+    isOverViews.value = to.name === "overview";
+
+    // 结果清空
+    haveResult.value = false;
+
+    // console.log("是否为首页overViews:", isOverViews.value, routerName);
+  },
+  { deep: true, immediate: true }
+);
 </script>
 
 <template>
   <!-- overview 首页 -->
   <div class="overview">
     <!-- 顶部 -->
-    <div class="overview-top">
+    <div class="overview-top" v-if="isOverViews">
       <!-- 文本提交 -->
       <TextSub class="overview-sub" @subText="subText" />
     </div>
 
     <!-- 内容 -->
-    <div class="container" v-if="haveResult">
+    <div class="container" v-if="haveResult && isOverViews">
       <!-- 分析结构 分割线 -->
       <div class="overview-parting-line">
         分析结果-----------------------------------------------------------------------------------
@@ -232,5 +250,8 @@ onMounted(() => {
       <!-- 关系图 -->
       <!-- <relational-ec :options="options" /> -->
     </div>
+
+    <!-- 其他模块 -->
+    <router-view />
   </div>
 </template>

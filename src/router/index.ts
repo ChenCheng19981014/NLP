@@ -10,15 +10,31 @@ const routes = [
     children: [
       // 添加子路由
       {
-        path: "/overview",
+        path: "overview",
         name: "overview",
         component: () => import("@/views/components/overview/index.vue"),
-      },
-
-      {
-        path: "/pinyin",
-        name: "pinyin",
-        component: () => import("@/views/components/pinyin/index.vue"),
+        children: [
+          {
+            path: "compare",
+            name: "compare",
+            component: () =>
+              import(
+                "@/views/components/overview/components/compare/index.vue"
+              ),
+          },
+          {
+            path: "censor",
+            name: "censor",
+            component: () =>
+              import("@/views/components/overview/components/censor/index.vue"),
+          },
+          {
+            path: "pinyin",
+            name: "pinyin",
+            component: () =>
+              import("@/views/components/overview/components/pinyin/index.vue"),
+          },
+        ],
       },
     ],
   },
