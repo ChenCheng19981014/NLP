@@ -9,6 +9,7 @@
   flex-direction: column;
   position: relative;
   justify-content: flex-start;
+  // overflow: auto;
 
   .overview-top {
     width: 1164px;
@@ -47,6 +48,7 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 import { ref, reactive, onMounted, watch } from "vue";
+import { ElBacktop } from "element-plus"; // 根据具体的导入路径调整
 import TextSub from "./components/text-submission.vue";
 import Result from "./components/result.vue";
 // 指示线 曲率
