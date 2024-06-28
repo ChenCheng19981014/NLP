@@ -3,8 +3,8 @@
 body,#app {
   width: 100vw;
   height: 100vh;
-  // overflow: hidden;
-  // background: $background;
   font-size: $base-font;
+    overflow-x: hidden;
 }
+
 

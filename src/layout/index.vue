@@ -20,7 +20,7 @@ import Nav from "./components/nav.vue";
   @include center;
   flex-direction: column;
   justify-content: flex-start;
-  overflow-y: scroll;
+  background-color: rgb(228, 230, 233);
 
   .layout-nav {
     height: 45px;

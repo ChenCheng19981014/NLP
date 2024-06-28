@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 // 文本
-const textarea = ref("");
+const textarea = ref(
+  "习近平主席特使、全国人大常委会副委员长艾更·依明巴海2019年12月10日在阿根廷首都布宜诺斯艾利斯出席阿新总"
+);
 </script>
 
 <template>
@@ -21,6 +23,7 @@ const textarea = ref("");
 
 <style scoped lang="scss">
 @import "@/design/hooks.scss";
+
 .text-submission {
   @include center;
   width: 100%;
@@ -37,6 +40,7 @@ const textarea = ref("");
   .sub-input {
     width: 100%;
     height: 200px;
+
     > textarea {
       width: 100%;
       height: 100% !important;

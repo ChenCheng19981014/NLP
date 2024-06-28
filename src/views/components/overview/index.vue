@@ -5,27 +5,39 @@
   width: 100%;
   height: auto;
   @include center;
+  flex-direction: column;
+  position: relative;
+  justify-content: flex-start;
+
+  .overview-top {
+    width: 1164px;
+    height: auto;
+
+    .overview-sub {
+      width: 100%;
+      height: 331px;
+      background-color: #f6f6f6;
+    }
+
+    .overview-parting-line {
+      @include center;
+      width: 100%;
+      height: 32px;
+      font-size: 24px;
+      line-height: 32px;
+      color: #565656;
+      justify-content: flex-start;
+      padding: 40px;
+    }
+  }
 
   .container {
     width: 1164px;
     height: auto;
 
-    .overview-sub {
-      height: 331px;
-      background-color: #f6f6f6;
-    }
-
-    .overview-main-title {
-      @include center;
+    .container-result {
       width: 100%;
-      height: 32px;
-      justify-content: flex-start;
-    }
-
-    .overview-result {
-      width: 100%;
-      height: 5000px;
-      background-color: #f6f6f6;
+      height: auto;
     }
   }
 }
@@ -85,13 +97,8 @@ const options = reactive<any>({
   ],
 });
 
-// 初始化
-onMounted(() => {
-  dealOptions();
-});
-
 // 处理 options
-const dealOptions = () => {
+const dealOptionsData = () => {
   // 基础 数据
   const dateList = [
     {
@@ -184,22 +191,31 @@ const dealOptions = () => {
     };
   });
 };
+
+// 初始化
+onMounted(() => {
+  // 处理图表 options
+  dealOptionsData();
+});
 </script>
 
 <template>
+  <!-- overview 首页 -->
   <div class="overview">
-    <!-- 内容 -->
-    <div class="container">
+    <!-- 顶部 -->
+    <div class="overview-top" v-if="true">
       <!-- 文本提交 -->
       <TextSub class="overview-sub" />
       <!-- 分析结构 分割线 -->
-
-      <div class="overview-main-title">
-        分析结果------------------------------------
+      <div class="overview-parting-line">
+        分析结果-----------------------------------------------------------------------------------
       </div>
+    </div>
 
+    <!-- 内容 -->
+    <div class="container">
       <!-- 详细的内容 -->
-      <Result class="overview-result"></Result>
+      <Result class="container-result"></Result>
       <!-- 关系图 -->
       <!-- <relational-ec :options="options" /> -->
     </div>

@@ -5,6 +5,7 @@ import App from "./App.vue";
 import router from "@/router";
 // 配置国际化
 import ElementPlus from "element-plus";
+import "element-plus/dist/index.css";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 // 引入自定义插件对象：注册整个项目的全局组件
 import globalComponents from "@/components";
@@ -20,7 +21,7 @@ const app = createApp(App);
 // 获取应用实例对象
 addDirective(app);
 app.use(router);
-app.use(ElementPlus, { locale: zhCn }); // 配置中文国际化
 app.use(globalComponents); // 安装全局路由组件
 app.use(pinia); // 注册全局仓库
+app.use(ElementPlus, { locale: zhCn }); // 配置中文国际化
 app.mount("#app");
