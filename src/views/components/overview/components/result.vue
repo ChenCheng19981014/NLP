@@ -24,6 +24,7 @@
     flex-direction: column;
     justify-content: flex-start;
     gap: 50px;
+    padding-bottom: 400px;
   }
 }
 </style>
@@ -53,9 +54,14 @@
 
       &:hover {
         color: $white;
-        background-color: #777;
+        background-color: rgb(66, 142, 185);
         cursor: pointer;
       }
+    }
+
+    .tabs-item-active {
+      color: $white;
+      background-color: rgb(66, 142, 185);
     }
 
     .tabs-item::after {
@@ -74,7 +80,9 @@
 }
 </style>
 <script setup lang="ts">
-import { ref } from "vue";
+import { useDebounceFn } from "@vueuse/core";
+import { nextTick } from "process";
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 // 路径
 const route = useRoute();
@@ -83,19 +91,62 @@ const { fullPath } = route;
 // 基础路径
 const basePath = ref(fullPath);
 // 左侧列表
-const leftTabs = ref([
-  { name: "关键词提取", id: "overview-1" },
-  { name: "自动摘要", id: "overview-1" },
-  { name: "拼音转写", id: "overview-1" },
-  { name: "繁简转换", id: "overview-1" },
-  { name: "文本推荐", id: "overview-1" },
-  { name: "句法分析", id: "overview-1" },
-  { name: "文本分类", id: "overview-1" },
-  { name: "情感分析", id: "overview-1" },
-  { name: "文本聚类", id: "overview-1" },
-  { name: "事件抽取", id: "overview-1" },
-  { name: "关系抽取", id: "overview-1" },
+const leftTabs = ref<{ [key: string]: any }[]>([
+  { name: "关键词提取", id: "overview-关键词提取" },
+  { name: "自动摘要", id: "overview-自动摘要" },
+  { name: "拼音转写", id: "overview-拼音转写" },
+  { name: "繁简转换", id: "overview-繁简转换" },
+  { name: "文本推荐", id: "overview-文本推荐" },
+  { name: "句法分析", id: "overview-句法分析" },
+  { name: "文本分类", id: "overview-文本分类" },
+  { name: "情感分析", id: "overview-情感分析" },
+  { name: "文本聚类", id: "overview-文本聚类" },
+  { name: "事件抽取", id: "overview-事件抽取" },
+  { name: "关系抽取", id: "overview-关系抽取" },
 ]);
+
+// 当前选中的index
+const leftSelectedIndex = ref(0);
+
+// 元素是否在移动中
+const isMoving = ref(false);
+
+// 跳转至 指定的锚点位置
+const jumpToPosition = (item: { [key: string]: any }, index: number) => {
+  isMoving.value = true;
+  const rightDiv = document.querySelector(`#${item.id}`);
+  rightDiv?.scrollIntoView({ block: "start", behavior: "smooth" });
+  leftSelectedIndex.value = index;
+  // 可以进行 滚动了
+  useDebounceFn(() => (isMoving.value = false), 800)();
+};
+
+// 判断选中的菜单
+const judegeSelectedMenu = () => {
+  if (isMoving.value) return;
+  const menu = document.querySelector(".right-context") as Element;
+  const childArr = Array.from(menu.children);
+  const winInnerHeight = window.innerHeight;
+  const flagHeight = winInnerHeight / 2;
+  const near = childArr.reduce((prev, curr) => {
+    const { top: prevTop } = prev.getBoundingClientRect();
+    const { top: currTop } = curr.getBoundingClientRect();
+    return Math.abs(currTop - flagHeight) < Math.abs(prevTop - flagHeight)
+      ? curr
+      : prev;
+  });
+  const index: number = Number(near.getAttribute("sort") || 0);
+  leftSelectedIndex.value = index;
+  // console.log(" 滚动信息 :", index, near);
+};
+
+// 进行防抖处理 再次进入
+const debouncedSelectTabs = useDebounceFn(() => judegeSelectedMenu(), 10);
+
+onMounted(() => {
+  // 滚动检测
+  window.addEventListener("scroll", () => debouncedSelectTabs(), true);
+});
 </script>
 
 <template>
@@ -106,7 +157,10 @@ const leftTabs = ref([
       <div class="left-tabs" v-if="true">
         <!-- 左侧内容 -->
         <div
+          @click="jumpToPosition(i, index)"
           class="tabs-item"
+          :sort="index"
+          :class="{ 'tabs-item-active': index === leftSelectedIndex }"
           v-for="(i, index) in leftTabs"
           :key="index + '_leftTabs'"
         >
@@ -120,6 +174,7 @@ const leftTabs = ref([
       <div
         v-for="(i, index) in leftTabs"
         :id="i.id"
+        :sort="index"
         :key="index + '_right_context'"
         :class="i.id"
         class="context-item"

@@ -4,6 +4,7 @@
 .overview {
   width: 100%;
   height: auto;
+  min-height: 1080px;
   @include center;
   flex-direction: column;
   position: relative;
@@ -18,6 +19,11 @@
       height: 331px;
       background-color: #f6f6f6;
     }
+  }
+
+  .container {
+    width: 1164px;
+    height: auto;
 
     .overview-parting-line {
       @include center;
@@ -29,11 +35,6 @@
       justify-content: flex-start;
       padding: 40px;
     }
-  }
-
-  .container {
-    width: 1164px;
-    height: auto;
 
     .container-result {
       width: 100%;
@@ -192,6 +193,18 @@ const dealOptionsData = () => {
   });
 };
 
+// 是否有返回接口 判断字符
+const haveResult = ref(false);
+// 提交 文本
+const subText = (data: any) => {
+  haveResult.value = data ? true : false;
+  ElMessage({
+    type: "success",
+    message: "模拟接口请求成功~",
+  });
+  console.log("subText文本:", data);
+};
+
 // 初始化
 onMounted(() => {
   // 处理图表 options
@@ -203,17 +216,17 @@ onMounted(() => {
   <!-- overview 首页 -->
   <div class="overview">
     <!-- 顶部 -->
-    <div class="overview-top" v-if="true">
+    <div class="overview-top">
       <!-- 文本提交 -->
-      <TextSub class="overview-sub" />
+      <TextSub class="overview-sub" @subText="subText" />
+    </div>
+
+    <!-- 内容 -->
+    <div class="container" v-if="haveResult">
       <!-- 分析结构 分割线 -->
       <div class="overview-parting-line">
         分析结果-----------------------------------------------------------------------------------
       </div>
-    </div>
-
-    <!-- 内容 -->
-    <div class="container">
       <!-- 详细的内容 -->
       <Result class="container-result"></Result>
       <!-- 关系图 -->

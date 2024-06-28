@@ -12,6 +12,18 @@
     color: $white;
     line-height: normal;
     font-family: "pm";
+    position: relative;
+  }
+
+  .show-function::after {
+    position: absolute;
+    content: "";
+    width: 0px;
+    right: 8px;
+    height: 0px;
+    top: 18px;
+    border: 5px solid transparent;
+    border-top-color: #fff;
   }
 }
 
@@ -106,6 +118,14 @@ const functionList = reactive([
   { id: 10, funName: "相似度计算" },
   { id: 11, funName: "热点聚类" },
 ]);
+
+// 接口使用文档 地址
+const apiHref = ref("https://ai.trs.cn/ckm/web/api-docs");
+
+// 开启新页面
+const openNewPage = (url: string) => {
+  window.open(url);
+};
 </script>
 
 <template>
@@ -115,7 +135,16 @@ const functionList = reactive([
     <div class="left">CKM</div>
     <!-- 右侧 -->
     <div class="right">
-      <div class="api" @click="() => {}">接口使用手册</div>
+      <div
+        class="api"
+        @click="
+          () => {
+            openNewPage(apiHref);
+          }
+        "
+      >
+        接口使用手册
+      </div>
       <div class="function">
         <!-- 弹窗 -->
         <el-popover
