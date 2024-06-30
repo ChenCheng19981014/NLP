@@ -18,5 +18,6 @@ declare module 'vue' {
     RelationalEc: typeof import('./src/components/global/relational-ec.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TreeRelationalEc: typeof import('./src/components/global/tree-relational-ec.vue')['default']
   }
 }
