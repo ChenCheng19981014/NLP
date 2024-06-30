@@ -81,9 +81,10 @@
 </style>
 <script setup lang="ts">
 import { useDebounceFn } from "@vueuse/core";
-import { nextTick } from "process";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import KeyWord from "./components/keyword.vue";
+import AutoAbstract from "./components/auto-abstract.vue";
 // 路径
 const route = useRoute();
 // full path路劲
@@ -92,17 +93,17 @@ const { fullPath } = route;
 const basePath = ref(fullPath);
 // 左侧列表
 const leftTabs = ref<{ [key: string]: any }[]>([
-  { name: "关键词提取", id: "overview-关键词提取" },
-  { name: "自动摘要", id: "overview-自动摘要" },
-  { name: "拼音转写", id: "overview-拼音转写" },
-  { name: "繁简转换", id: "overview-繁简转换" },
-  { name: "文本推荐", id: "overview-文本推荐" },
-  { name: "句法分析", id: "overview-句法分析" },
-  { name: "文本分类", id: "overview-文本分类" },
-  { name: "情感分析", id: "overview-情感分析" },
-  { name: "文本聚类", id: "overview-文本聚类" },
-  { name: "事件抽取", id: "overview-事件抽取" },
-  { name: "关系抽取", id: "overview-关系抽取" },
+  { name: "关键词提取", id: "overview-关键词提取", component: KeyWord },
+  { name: "自动摘要", id: "overview-自动摘要", component: AutoAbstract },
+  { name: "拼音转写", id: "overview-拼音转写", component: KeyWord },
+  { name: "繁简转换", id: "overview-繁简转换", component: KeyWord },
+  { name: "文本推荐", id: "overview-文本推荐", component: KeyWord },
+  { name: "句法分析", id: "overview-句法分析", component: KeyWord },
+  { name: "文本分类", id: "overview-文本分类", component: KeyWord },
+  { name: "情感分析", id: "overview-情感分析", component: KeyWord },
+  { name: "文本聚类", id: "overview-文本聚类", component: KeyWord },
+  { name: "事件抽取", id: "overview-事件抽取", component: KeyWord },
+  { name: "关系抽取", id: "overview-关系抽取", component: KeyWord },
 ]);
 
 // 当前选中的index
@@ -179,7 +180,7 @@ onMounted(() => {
         :class="i.id"
         class="context-item"
       >
-        {{ i.name }}
+        <component :is="i.component" />
       </div>
     </div>
   </div>
