@@ -5,8 +5,8 @@
 <script setup>
 import * as echarts from "echarts";
 import { onMounted, onUnmounted, ref, watch, nextTick } from "vue";
-import "echarts-liquidfill";
-import "echarts-gl";
+// import "echarts-liquidfill";
+// import "echarts-gl";
 const chartRef = ref(null);
 const emit = defineEmits(["loadOver"]);
 let chartInstance = null;
@@ -18,6 +18,15 @@ const initChart = () => {
   } else {
     nextTick(() => {
       try {
+        // 执行第二次的时候将第一次的表格数据清除掉
+        if (
+          chartInstance != null &&
+          chartInstance != "" &&
+          chartInstance != undefined
+        ) {
+          chartInstance.dispose(); //销毁
+        }
+
         chartInstance = echarts?.init(chartRef.value);
         chartInstance?.setOption(props.options);
         emit("loadOver", chartInstance);

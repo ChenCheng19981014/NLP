@@ -9,8 +9,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     ChartBaseV3: typeof import('./src/components/global/chart-base-v3.vue')['default']
     ElAffix: typeof import('element-plus/es')['ElAffix']
-    ElAnchor: typeof import('element-plus/es')['ElAnchor']
-    ElAnchorLink: typeof import('element-plus/es')['ElAnchorLink']
     ElBacktop: typeof import('element-plus/es')['ElBacktop']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElInput: typeof import('element-plus/es')['ElInput']
@@ -19,5 +17,6 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TreeRelationalEc: typeof import('./src/components/global/tree-relational-ec.vue')['default']
+    YibiaopanEc: typeof import('./src/components/global/yibiaopan-ec.vue')['default']
   }
 }

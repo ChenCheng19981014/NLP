@@ -180,7 +180,10 @@ onMounted(() => {
         :class="i.id"
         class="context-item"
       >
-        <component :is="i.component" />
+        <!-- <component :is="i.component" /> -->
+
+        <!-- 仪表盘 -->
+        <yibiaopan-ec />
       </div>
     </div>
   </div>
