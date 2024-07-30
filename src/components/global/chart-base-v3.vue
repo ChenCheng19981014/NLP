@@ -5,15 +5,22 @@
 <script setup>
 import * as echarts from "echarts";
 import { onMounted, onUnmounted, ref, watch, nextTick } from "vue";
-// import "echarts-liquidfill";
-// import "echarts-gl";
-const chartRef = ref(null);
-const emit = defineEmits(["loadOver"]);
+import "echarts-liquidfill";
+import "echarts-gl";
+import "echarts-wordcloud";
+
 let chartInstance = null;
 
+// NOTE:组件基础div
+const chartRef = ref(null);
+
+// 组件回调函数
+const emit = defineEmits(["loadOver"]);
+
+// NOTE:初始化 表格
 const initChart = () => {
   if (!chartRef.value) {
-    console.warn("图表容器不可用!");
+    // console.warn("图表容器不可用!");
     return;
   } else {
     nextTick(() => {
@@ -25,11 +32,15 @@ const initChart = () => {
           chartInstance != undefined
         ) {
           chartInstance.dispose(); //销毁
+          return;
         }
 
         chartInstance = echarts?.init(chartRef.value);
+
         chartInstance?.setOption(props.options);
-        emit("loadOver", chartInstance);
+
+        emit("loadOver", chartInstance); // 触发
+
         console.warn = () => {};
       } catch (error) {
         console.warn("无法加载图表：", error);
@@ -43,35 +54,7 @@ const resizeObserver = new ResizeObserver(() => {
   chartInstance?.resize();
 });
 
-onMounted(() => {
-  // 监听窗口大小变化
-  window.addEventListener("resize", () => {
-    if (chartInstance) {
-      chartInstance.resize();
-    }
-  });
-  if (chartRef.value) {
-    resizeObserver.observe(chartRef.value);
-  }
-});
-
-watch(
-  () => chartRef,
-  () => {
-    initChart();
-  },
-  { deep: true, immediate: true }
-);
-
-onUnmounted(() => {
-  if (chartInstance) {
-    chartInstance.dispose();
-  }
-  if (chartRef.value) {
-    resizeObserver.unobserve(chartRef.value);
-  }
-});
-
+// NOTE: Props值
 const props = defineProps({
   options: Object,
   loading: Boolean,
@@ -102,6 +85,7 @@ const props = defineProps({
   },
 });
 
+// NOTE:监听数据的变化
 watch(
   () => props.options,
   (newOption) => {
@@ -109,11 +93,37 @@ watch(
   },
   { deep: true }
 );
+
+watch(
+  () => chartRef,
+  () => {
+    initChart();
+  },
+  { deep: true }
+);
+
+// TODO: 初始化
+onMounted(() => {
+  // 监听窗口大小变化
+  window.addEventListener("resize", () =>
+    chartInstance ? chartInstance.resize() : null
+  );
+  chartRef.value ? resizeObserver.observe(chartRef.value) : null;
+});
+
+// Review: 卸载
+onUnmounted(() => {
+  chartInstance ? chartInstance.resize() : null;
+  chartRef.value ? resizeObserver.unobserve(chartRef.value) : null;
+});
 </script>
 
 <style scoped lang="scss">
+@import "@/design/hooks.scss";
+
 .chart-base {
   width: 100%;
   height: 100%;
+  @include center;
 }
 </style>

@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv, ConfigEnv, UserConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import path from "path";
 // 配置按需导入
 import Icons from "unplugin-icons/vite";
@@ -13,6 +14,16 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
   // console.log("env:", env);
   return {
     plugins: [
+      createSvgIconsPlugin({
+        // 指定需要缓存的图标文件夹
+        iconDirs: [path.resolve(process.cwd(), "src/assets/svgs")],
+        // 指定symbolId格式
+        symbolId: "icon-[name]",
+        svgoOptions: {
+          full: true,
+          plugins: [{ name: "removeAttrs", params: { attrs: "fill" } }],
+        },
+      }),
       vue(),
       // cesium(),
       AutoImport({
@@ -52,8 +63,8 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
     },
     server: {
       // open: true,
+      // port: 8888,
       host: "0.0.0.0",
-      port: 8888,
     },
     base: "./",
   };
