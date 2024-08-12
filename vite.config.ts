@@ -66,6 +66,6 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       // port: 8888,
       host: "0.0.0.0",
     },
-    base: "./",
+    base: "https://jackchen-1307363334.cos.ap-nanjing.myqcloud.com/NLP/dist",
   };
 });

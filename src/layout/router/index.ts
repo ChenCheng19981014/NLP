@@ -34,6 +34,13 @@ const routes = [
             component: () => import("@/views/components/graph/index.vue"),
             // component: () => import("@/views/components/graph/index-v3.vue"),
           },
+
+          {
+            //TODO api文档
+            path: "apiPages",
+            name: "apiPages",
+            component: () => import("@/views/components/api-pages/index.vue"),
+          },
         ],
       },
     ],

@@ -3,15 +3,11 @@
 
 .overview {
   width: 100%;
-  // height: auto;
   height: 100%;
-
-  min-height: 1080px;
   @include center;
   flex-direction: column;
   position: relative;
   justify-content: flex-start;
-  // overflow: auto;
 
   .overview-top {
     width: 1164px;
@@ -26,12 +22,10 @@
 
   .overview-container {
     width: 1164px;
-    // height: auto;
     height: 100%;
 
     .container-result {
       width: 100%;
-      // height: auto;
       height: 100%;
     }
   }
@@ -39,6 +33,7 @@
 </style>
 
 <script setup lang="ts">
+// TODO：首页组件: Overview
 import { useRoute } from "vue-router";
 import {
   ref,
@@ -169,7 +164,7 @@ const route = useRoute();
 
 watch(
   () => route,
-  (to, from) => {
+  (to) => {
     // 是否为首页  首页显示首页内容
     isOverViews.value = to.name === "overview";
     // 结果清空
@@ -184,7 +179,6 @@ onMounted(() => {});
 <template>
   <!--TODO overview 首页 -->
   <div class="overview">
-    <!-- 顶部 文本域提交区域 -->
     <div class="overview-top" v-if="isOverViews">
       <!-- 文本提交 -->
       <TopSub class="overview-sub" @subText="subText" />

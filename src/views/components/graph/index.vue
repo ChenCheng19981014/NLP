@@ -6,13 +6,12 @@
       @keyup.enter="handleEnter"
     />
     <div id="divid">
-      <svg width="100%" height="1080"></svg>
+      <svg class="graph-svg" width="100%"></svg>
     </div>
   </div>
 </template>
 
 <script setup lang="js">
-
 import { ref, onMounted, reactive, nextTick } from "vue";
 import { graph, mock } from "@/const/const";
 import { useDebounceFn } from "@vueuse/core";
@@ -212,7 +211,9 @@ const update = (newNodes, newLinks, position) => {
   nodeElements = nodeElements.enter()
     .append("circle")
     .attr("r", 15)
-    .attr("fill", getRandomColorFromArray)
+    .attr("fill", (d, index) => {
+      return getRandomColorFromArray(index)
+    })
     .call(d3.drag()
       .on("start", (d) => {
         if (!d3.event.active) simulation.alphaTarget(0.01).restart()
@@ -419,7 +420,9 @@ const drawChart = (data) => {
     .data(nodes)
     .enter().append("circle")
     .attr("r", 15)
-    .attr("fill", getRandomColorFromArray)
+    .attr("fill", (d, index) => {
+      return getRandomColorFromArray(index)
+    })
     .call(dragDrop)
     .attr("cx", function (d) { return d.x; })
     .attr("cy", function (d) { return d.y; })
@@ -540,13 +543,28 @@ const initD3 = async () => {
 };
 
 // 定义一个包含预设颜色的数组
-const getRandomColorFromArray = () => {
-  let randomIndex = Math.floor(Math.random() * entityColors.length);
-  return entityColors[randomIndex];
+const getRandomColorFromArray = (index) => {
+  // 假设 entityColors 是你的颜色数组
+
+  // 使用取余运算来确保索引在合法范围内循环
+  const colorIndex = index % entityColors.length;
+
+  // 返回对应索引的颜色
+  return entityColors[colorIndex];
 }
 
 onMounted(() => {
-  initD3();
+
+  nextTick(() => {
+    // 获取 外盒子高度 统一
+    const overviewDiv = document.querySelector('.overview').getBoundingClientRect();
+
+    document.querySelector('.graph-svg').style.height = `${overviewDiv.height}px`;
+
+    // 初始化关系图
+    initD3();
+  })
+
 });
 </script>
 
@@ -555,12 +573,12 @@ onMounted(() => {
 
 .graph {
   width: 100%;
-  height: 1080px;
+  // height: 1080px;
+  height: 100%;
   position: relative;
 
   #divid {
     width: 100%;
-    height: 1080px;
 
     > svg {
       background-color: rgb(17, 22, 42);

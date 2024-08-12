@@ -53,7 +53,7 @@ const resText = (res: string[] | any, isClear = false) => {
     @include center;
 
     .ocr-upload {
-      margin-top: 20px;
+      margin-top: 40px;
       background-color: #d4d3d3;
       padding: 20px;
     }

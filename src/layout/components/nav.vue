@@ -5,10 +5,6 @@
     <div class="left">NLP</div>
     <!-- 右侧 -->
     <div class="right">
-      <div class="graph" @click="openGraph()">知识图谱</div>
-
-      <div class="api" @click="openNewPage(apiHref)">接口使用手册</div>
-
       <div class="function">
         <!-- 弹窗 -->
         <el-popover
@@ -36,13 +32,17 @@
           </div>
         </el-popover>
       </div>
+
+      <div class="graph" @click="openGraph()">知识图谱</div>
+
+      <div class="api" @click="openNewPage()">接口使用手册</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useRouter, useRoute } from "vue-router";
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { onClickOutside } from "@vueuse/core";
 
 // 路由
@@ -59,8 +59,8 @@ const functionList = reactive([
 const apiHref = ref("https://ai.trs.cn/ckm/web/api-docs");
 
 // 开启新页面
-const openNewPage = (url: string) => {
-  window.open(url);
+const openNewPage = () => {
+  router.replace({ path: "/overview/apiPages" });
 };
 
 // 打开关系图
@@ -88,6 +88,8 @@ onClickOutside(navDialog, (event) => {
   navDialogStatus.value = false;
   // console.log("点击其他的处了~");
 });
+
+onMounted(() => {});
 </script>
 
 <style lang="scss">
@@ -95,6 +97,9 @@ onClickOutside(navDialog, (event) => {
 
 .global-nav {
   background: #000;
+  z-index: 5;
+  height: 100%;
+  box-sizing: border-box;
 
   .show-function {
     width: 100%;

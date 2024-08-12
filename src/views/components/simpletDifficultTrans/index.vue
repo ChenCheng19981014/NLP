@@ -154,9 +154,11 @@ onMounted(() => {
 
   .container {
     width: 1164px;
+    height: 100%;
     font-size: $base-font;
     @include center;
     flex-direction: column;
+    justify-content: flex-start;
 
     .right-copy {
       margin-top: 10px;

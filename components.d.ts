@@ -24,7 +24,6 @@ declare module 'vue' {
     GlobalSelect: typeof import('./src/components/global/global-select.vue')['default']
     GlobalSvg: typeof import('./src/components/global/global-svg.vue')['default']
     Loading: typeof import('./src/components/global/loading.vue')['default']
-    OverviewsLayout: typeof import('./src/components/global/overviews-layout.vue')['default']
     OverviewsTable: typeof import('./src/components/global/overviews-table.vue')['default']
     PinyinConversion: typeof import('./src/components/global/pinyin-conversion.vue')['default']
     QinganEc: typeof import('./src/components/global/qingan-ec.vue')['default']
